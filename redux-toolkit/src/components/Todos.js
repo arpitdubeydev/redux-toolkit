@@ -8,75 +8,50 @@ function Todos() {
   const todos = useSelector((state) => state.todos);
   const dispatch = useDispatch();
 
-  const [editRowId, setEditRowId] = useState(null);
-  const [editFormData, setEditFormData] = useState({});
-
-  const handleEditClick = (row) => {
-    setEditRowId(row.id);
-    setEditFormData({ name: row.name, title: row.title, status: row.status });
-  };
-
-  const handleUpdateClick = () => {
-    onUpdate(editRowId, editFormData);
-    setEditRowId(null);
-  };
-
-  const handleCancelClick = () => {
-    setEditRowId(null);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditFormData({ ...editFormData, [name]: value });
-  };
-
+  console.log(todos);
 
   return (
     <>
-      <div>Todos</div>
+      {/* <div>Todos</div>
       {todos.map((todo) => (
         <div key={todo.id}>{todo.text}</div>
-      ))}
+      ))} */}
 
-<div className="container mx-auto mt-5">
-      <table className="min-w-full divide-y divide-gray-200">
-        {/* Table headers */}
-        <thead className="bg-gray-50">
-          {/* ... */}
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {todos.map((row) => (
-            <tr key={row.id}>
-              {editRowId === row.id ? (
-                // Editable row
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  <input
-                    type="text"
-                    name="name"
-                    value={editFormData.name}
-                    onChange={handleInputChange}
-                  />
-                </td>
-                // ... other editable cells
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button onClick={handleUpdateClick}>Update</button>
-                  <button onClick={handleCancelClick}>Cancel</button>
-                </td>
-              ) : (
-                // Non-editable row
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {row.name}
-                </td>
-                // ... other non-editable cells
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button onClick={() => handleEditClick(row)}>Edit</button>
-                </td>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+     <div className="container mx-auto mt-5">
+  <table className="min-w-full divide-y divide-gray-200">
+    <thead className="bg-gray-50">
+      <tr>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Name
+        </th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Title
+        </th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Status
+        </th>
+      </tr>
+    </thead>
+    <tbody className="bg-white divide-y divide-gray-200">
+      {todos.map((row) => (
+        <tr key={row.id}>
+          <td className="px-6 py-4 text-left whitespace-nowrap text-sm font-medium text-gray-900">
+            {row.text} 
+          </td>
+          <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
+            {row.title}
+          </td>
+          <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
+            {row.status}
+          </td>
+          <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
+           <button onClick={() => dispatch(removeTodo(row.id))}>Click</button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
 
     </>
   );
